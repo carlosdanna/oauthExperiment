@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!-- Libraries -->
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-ui-router.min.js"></script>
+    
+    <!-- Bootstrap Css -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+
+
+    <!-- App Module -->
+    <script src="app/app.module.js"></script>
+    <script src="app/app.config.js"></script>
+    <script src="app/app.controller.js"></script>
+
+    <!-- Dashboard module -->
+    <script src="app/dashboard/dashboard.services.js"></script>
+    <script src="app/dashboard/dashboard.controller.js"></script>
+
+    <!-- Login module -->
+    <script src="app/login/login.services.js"></script>
+    <script src="app/login/login.controller.js"></script>
+    
+    <!-- Signup module -->
+    <script src="app/signup/signup.services.js"></script>
+    <script src="app/signup/signup.controller.js"></script>
+
+</head>
+<body>
+    <div ng-app="app">
+        <div ui-view></div> 
+    </div>
+</body>
+</html>
