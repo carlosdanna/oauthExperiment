@@ -11,21 +11,21 @@
                     controller: "appController",
                     controllerAs: "vm"
                 })
-                .state('login', {
-                    url: "/login",
+                .state('home.login', {
+                    url: "home/login",
                     templateUrl: "app/login/login.tmpl.html",
                     controller: "loginController",
                     controllerAs: "vm"
                 })
               
-                .state('signup', {
-                    url: "/signup",
+                .state('home.signup', {
+                    url: "home/signup",
                     templateUrl: "app/signup/signup.tmpl.html",
                     controller: "signupController",
                     controllerAs: "vm"
                 })
-                .state('dashboard', {
-                    url: "/dashboard",
+                .state('home.dashboard', {
+                    url: "home/dashboard",
                     templateUrl: "app/dashboard/dashboard.tmpl.html",
                     controller: "dashboardController",
                     controllerAs: "vm"

@@ -1,6 +1,9 @@
 ﻿(function () {
     angular.module("app")
-        .controller("appController", ["$scope", function ($scope) {
-            $scope.test = "This is appController";
+        .controller("appController", ["$scope", "$state", function ($scope, $state) {
+            
+            vm = this;
+
+            
         }]);
 })();

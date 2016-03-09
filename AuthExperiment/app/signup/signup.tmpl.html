@@ -1,3 +1,21 @@
 ﻿<div>
-    <p>{{name}}</p>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h2>Sign Up</h2>
+        </div>
+        <div class="panel-body">
+            <form>
+                <label for="email">Email</label>
+                <input name="email" type="text" class="form-control" ng-model="vm.login.email" />
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" ng-model="vm.login.password" />
+                <br/>
+                <div class="pull-right">
+                    <button class="btn btn-primary" ng-click="">Log in</button>
+                    <a class="btn btn-danger" ui-sref="home.login">Go Back</a>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer">Created by Carlos Danna</div>
+    </div>
 </div>
