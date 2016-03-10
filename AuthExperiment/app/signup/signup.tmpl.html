@@ -4,18 +4,44 @@
             <h2>Sign Up</h2>
         </div>
         <div class="panel-body">
-            <form>
-                <label for="firstname">Firstname</label>
-                <input name="firstname" type="text" class="form-control" ng-model="vm.login.firstname" />
-                <label for="lastname">Lastname</label>
-                <input name="lastname" type="text" class="form-control" ng-model="vm.login.lastname" />
-                <label for="email">Email</label>
-                <input name="email" type="text" class="form-control" ng-model="vm.login.email" />
-                <label for="password">Password</label>
-                <input name="password" type="password" class="form-control" ng-model="vm.login.password" />
-                <br/>
+            <form name="signupForm" novalidate>
+
+                <!-- Firstname Field -->
+                <div class="form-group" ng-class="{ 'has-error' : signupForm.firstname.$invalid && !signupForm.firstname.$pristine }">
+                    <label for="firstname">Firstname</label>
+                    <input name="firstname" type="text" class="form-control" ng-model=" vm.login.firstname" ng-minlength="3" ng-maxlength="8" required />
+                    <p ng-show="signupForm.firstname.$invalid && !signupForm.firstname.$pristine" class="help-block">You Firstname is required.</p>
+                    <p ng-show="signupForm.firstname.$error.minlength" class="help-block">Firstname is too short.</p>
+                    <p ng-show="signupForm.firstname.$error.maxlength" class="help-block">Firstname is too long.</p>
+                </div>
+
+                <!-- Lastname Field -->
+                <div class="form-group" ng-class="{ 'has-error' : signupForm.lastname.$invalid && !signupForm.lastname.$pristine }">
+                    <label for="lastname">Lastname</label>
+                    <input name="lastname" type="text" class="form-control" ng-class="{ 'has-error' : signupForm.lastname.$invalid && !signupForm.lastname.$pristine }" ng-model=" vm.login.lastname" ng-minlength="3" ng-maxlength="8" required />
+                    <p ng-show="signupForm.lastname.$invalid && !signupForm.lastname.$pristine" class="help-block">You Lastname is required.</p>
+                    <p ng-show="signupForm.lastname.$error.minlength" class="help-block">Lastname is too short.</p>
+                    <p ng-show="signupForm.lastname.$error.maxlength" class="help-block">Lastname is too long.</p>
+                </div>
+                <!-- Email Field -->
+                <div class="form-group" ng-class="{ 'has-error' : signupForm.email.$invalid && !signupForm.email.$pristine }">
+                    <label for="email">Email</label>
+                    <input name="email" type="email" class="form-control" ng-class="{ 'has-error' : signupForm.email.$invalid && !signupForm.email.$pristine }" ng-model=" vm.login.email" required />
+                    <p ng-show="signupForm.email.$invalid && !signupForm.email.$pristine" class="help-block">You Email is required.</p>
+                    <p ng-show="signupForm.email.$invalid && !signupForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                </div>
+                <!-- Password Field -->
+                <div class="form-group" ng-class="{ 'has-error' : signupForm.password.$invalid && !signupForm.password.$pristine }">
+                    <label for="password">Password</label>
+                    <input name="password" type="password" class="form-control" ng-class="{ 'has-error' : signupForm.password.$invalid && !signupForm.password.$pristine }" ng-model=" vm.login.password" ng-minlength="8" ng-maxlength="32" required />
+                    <p ng-show="signupForm.password.$invalid && !signupForm.password.$pristine" class="help-block">You Password is required.</p>
+                    <p ng-show="signupForm.password.$error.minlength" class="help-block">Password is too short.</p>
+                    <p ng-show="signupForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+                </div>
+                <br />
+                <!-- Buttons -->
                 <div class="pull-right">
-                    <button class="btn btn-primary" ng-click="vm.signUp()">Sign up</button>
+                    <button class="btn btn-primary" ng-click="vm.signUp()" ng-disabled="signupForm.$invalid">Sign up</button>
                     <a class="btn btn-danger" ui-sref="home.login">Go Back</a>
                 </div>
             </form>
