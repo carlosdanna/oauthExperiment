@@ -18,28 +18,34 @@ namespace AuthExperiment.Managers
         private IMongoDatabase clientDatabase;
         #endregion
 
-        #region Public Methods
+        #region Constructor
         public MongoDBManager()
         {
             client = new MongoClient("mongodb://user:password@ds023088.mlab.com:23088/signuptest");
             clientDatabase = client.GetDatabase("signuptest");
         }
+        #endregion
 
-        public IMongoCollection<BsonDocument> GetCollection(string CollectionName)
-        {
-            return clientDatabase.GetCollection<BsonDocument>(CollectionName);
-        }
+        //public IMongoCollection<BsonDocument> GetCollection(string CollectionName)
+        //{
+        //    return clientDatabase.GetCollection<BsonDocument>(CollectionName);
+        //}
 
+        #region Public Methods
+        /// <summary>
+        /// Get Users from the database
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<UserModel>> GetUsers()
         {
             var collection = clientDatabase.GetCollection<BsonDocument>("users");
-            List<BsonDocument> search = new List<BsonDocument>();
+            
             BsonDocument filter = new BsonDocument();
-            search = collection.Find<BsonDocument>(filter).ToListAsync().Result;
-
+            var search = await collection.FindAsync<BsonDocument>(filter);
+            
             List<UserModel> users = new List<UserModel>();
 
-            foreach (BsonDocument item in search)
+            foreach (BsonDocument item in search.ToList<BsonDocument>())
             {
                 UserModel user = new UserModel();
                 user._id = item.GetValue("_id").ToString();
@@ -50,7 +56,30 @@ namespace AuthExperiment.Managers
                 users.Add(user);
             }
             return users;
+        }
 
+        public async Task<UserModel> GetUser(LoginModel user)
+        { 
+            
+            var collection = clientDatabase.GetCollection<BsonDocument>("users");
+            UserModel userToLogin = new UserModel();
+            //Find user by e-mail and check if the password matches
+            
+            BsonDocument filter = new BsonDocument();
+            filter.Set("email", user.email);
+            filter.Set("password", user.password);
+            
+            var search = await collection.FindAsync<BsonDocument>(filter);
+            var result = search.ToList<BsonDocument>().First<BsonDocument>();
+
+            userToLogin._id = result.GetValue("_id").ToString();
+            userToLogin.email = result.GetValue("email").ToString();
+            userToLogin.firstname = result.GetValue("firstname").ToString();
+            userToLogin.lastname = result.GetValue("lastname").ToString();
+            userToLogin.password = result.GetValue("password").ToString();
+
+            
+            return userToLogin;
         }
 
         public async Task CreateNewUser(UserModel user)
@@ -81,5 +110,6 @@ namespace AuthExperiment.Managers
 
         }
         #endregion
+
     }
 }

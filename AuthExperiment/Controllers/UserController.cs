@@ -27,8 +27,15 @@ namespace AuthExperiment.Controllers
         }
 
         [HttpPost]
+        public async Task<IHttpActionResult> Login(LoginModel user)
+        {
+            var result = await _userManager.GetUser(user);
+            return Ok(result);
+        }
+
+        [HttpPost]
         public async Task<IHttpActionResult> CreateUser(UserModel user) {
-            var result = _userManager.CreateNewUser(user);
+            await _userManager.CreateNewUser(user);
             return Ok();
         }
 
