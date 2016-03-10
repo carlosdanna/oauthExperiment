@@ -5,13 +5,17 @@
         </div>
         <div class="panel-body">
             <form>
+                <label for="firstname">Firstname</label>
+                <input name="firstname" type="text" class="form-control" ng-model="vm.login.firstname" />
+                <label for="lastname">Lastname</label>
+                <input name="lastname" type="text" class="form-control" ng-model="vm.login.lastname" />
                 <label for="email">Email</label>
                 <input name="email" type="text" class="form-control" ng-model="vm.login.email" />
                 <label for="password">Password</label>
                 <input name="password" type="password" class="form-control" ng-model="vm.login.password" />
                 <br/>
                 <div class="pull-right">
-                    <button class="btn btn-primary" ng-click="">Log in</button>
+                    <button class="btn btn-primary" ng-click="vm.signUp()">Sign up</button>
                     <a class="btn btn-danger" ui-sref="home.login">Go Back</a>
                 </div>
             </form>

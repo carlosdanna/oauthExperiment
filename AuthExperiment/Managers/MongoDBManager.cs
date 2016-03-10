@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Core;
 using AuthExperiment.Models;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace AuthExperiment.Managers
         private MongoClient client;
         private IMongoDatabase clientDatabase;
         #endregion
-        
+
         #region Public Methods
         public MongoDBManager()
         {
@@ -38,7 +39,8 @@ namespace AuthExperiment.Managers
 
             List<UserModel> users = new List<UserModel>();
 
-            foreach (BsonDocument item in search) {
+            foreach (BsonDocument item in search)
+            {
                 UserModel user = new UserModel();
                 user._id = item.GetValue("_id").ToString();
                 user.email = item.GetValue("email").ToString();
@@ -48,6 +50,34 @@ namespace AuthExperiment.Managers
                 users.Add(user);
             }
             return users;
+
+        }
+
+        public async Task CreateNewUser(UserModel user)
+        {
+            var type = user.GetType();
+            var properties = type.GetProperties();
+            BsonDocument bsonUser = new BsonDocument();
+
+
+            foreach (var property in properties)
+            {
+                if (property.Name.ToString() == "_id") {
+                    bsonUser.Set(property.Name.ToString(), new ObjectId());
+                    continue;
+                }
+                if (property.GetValue(user) == null)
+                {
+                    bsonUser.Set(property.Name.ToString(), "");
+                }
+                else
+                {
+                    bsonUser.Set(property.Name.ToString(), property.GetValue(user).ToString());
+                }
+            }
+            var collection = clientDatabase.GetCollection<BsonDocument>("users");
+            
+            await collection.InsertOneAsync(bsonUser);
 
         }
         #endregion
